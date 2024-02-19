@@ -4,7 +4,7 @@ package com.group16;
  * Hello world!
  *
  */
-public class App 
+public class InventoryApplication 
 {
     public static void main( String[] args )
     {
