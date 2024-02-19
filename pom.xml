@@ -1,41 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>group16</groupId>
-	<artifactId>store</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>store</name>
-	<description>microservices-based, even-driven ecommerce</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	
+  <modelVersion>4.0.0</modelVersion>
+  	
+  <groupId>com.group16</groupId>
+  	
+  <artifactId>store</artifactId>
+  	
+  <packaging>pom</packaging>
+  	
+  <version>0.0.1-SNAPSHOT</version>
+  	
+  <name>store</name>
+  	
+  <description>microservices-based, even-driven ecommerce</description>
+    <modules>
+        <module>user</module>
+    </modules>
+	 
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+	
+  <properties>
+    		
+    <java.version>17</java.version>
+    		
+    <spring.boot.dependencies.version>3.2.2</spring.boot.dependencies.version>
+    		
+    <spring.cloud-version>2023.0.0</spring.cloud-version>
+    	    
+    <spring.boot.maven.plugin.version>3.2.2</spring.boot.maven.plugin.version>
+    	
+  </properties>
+  	 
+  <dependencyManagement>
+            
+    <dependencies>
+                  
+      <dependency>
+                        
+        <groupId>org.springframework.boot</groupId>
+                        
+        <artifactId>spring-boot-dependencies</artifactId>
+                        
+        <version>${spring.boot.dependencies.version}</version>
+                        
+        <scope>import</scope>
+                        
+        <type>pom</type>
+                    
+      </dependency>
+                  
+      <dependency>
+                        
+        <groupId>org.springframework.cloud</groupId>
+                        
+        <artifactId>spring-cloud-dependencies</artifactId>
+                        
+        <version>${spring.cloud-version}</version>
+                        
+        <type>pom</type>
+                        
+        <scope>import</scope>
+                    
+      </dependency>
+              
+    </dependencies>
+        
+  </dependencyManagement>
+  	
+  <dependencies>
+    		
+    <dependency>
+      			
+      <groupId>org.springframework.boot</groupId>
+      			
+      <artifactId>spring-boot-starter-test</artifactId>
+      			
+      <scope>test</scope>
+      		
+    </dependency>
+    	
+  </dependencies>
+  	
+  <build>
+    		
+    <plugins>
+      			
+      <plugin>
+        				
+        <groupId>org.springframework.boot</groupId>
+        				
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        				
+        <version>${spring.boot.maven.plugin.version}</version>
+        			
+      </plugin>
+      		
+    </plugins>
+    	
+  </build>
+  
 </project>
