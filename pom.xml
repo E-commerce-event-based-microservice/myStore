@@ -86,7 +86,7 @@
         <groupId>org.springframework.boot</groupId>
                                         
         
-        
+      
         <artifactId>spring-boot-dependencies</artifactId>
                                         
         
@@ -129,16 +129,18 @@
         
         <scope>import</scope>
                                     
-      
-      
+
       </dependency>
-                          
-    
+     <!-- I think should be in parent dependencies           -->
+       
+     <!-- <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.28</version> <!-- Specify the version you want to use -->
+        <scope>runtime</scope> -->
+      </dependency> 
     
     </dependencies>
-                
-  
-  
   </dependencyManagement>
       	
   
@@ -165,7 +167,6 @@
     
     </dependency>
             	
-  
   
   </dependencies>
       	
