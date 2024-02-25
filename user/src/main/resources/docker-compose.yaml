@@ -1,2 +1,44 @@
 # service-specifc resources
 
+version: "3.7"
+services:
+ # web:
+ #   image: httpd:latest
+ #   container_name: apache
+ #   ports:
+ #     - 8080:80
+  db:
+    image: mysql:5.7
+    container_name: micorservice-user-mysql
+    # using array syntax instead of list. we used "volumes" here
+    volumes: ["microservice_user_db_data:/var/lib/mysql"]
+    # later I should use .evn files
+    environment:
+       MYSQL_ROOT_PASSWORD: password
+       MYSQL_DATABASE: store 
+       MYSQL_USER: abood
+       MYSQL_PASSWORD: pass
+    restart: always
+    networks:
+     - microservice-user     
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    platform: linux/amd64
+    container_name: microservice-user-phpmyadmin
+    ports:
+      - 81:80
+    environment:
+       PMA_HOST: db:3306
+       MYSQL_ROOT_PASSWORD: password
+       UPLOAD_LIMIT: 1024M
+       MEMORY_LIMIT: 1024M
+       MAX_EXECUTION_TIME: 300
+    depends_on:
+      -  db
+    restart: always
+    networks:
+      -  microservice-user
+volumes:
+   microservice_user_db_data:
+networks:
+   microservice-user:    
