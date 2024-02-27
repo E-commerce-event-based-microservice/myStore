@@ -11,6 +11,8 @@ services:
     image: mysql:5.7
     container_name: micorservice-user-mysql
     # using array syntax instead of list. we used "volumes" here
+    ports: 
+    - 3306:3306
     volumes: ["microservice_user_db_data:/var/lib/mysql"]
     # later I should use .evn files
     environment:
