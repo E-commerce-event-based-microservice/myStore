@@ -1,0 +1,46 @@
+
+
+server:
+ port: 8080
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud.gateway.mvc:
+    routes:
+      - id: users-route
+        uri: ${USERS_ROUTE_URI:http://localhost:8081}
+        predicates:
+        - Path=/users/**
+        filters:
+        # - PrefixPath=/api
+      - id: orders-route
+        uri: ${ORDERS_ROUTE_URI:http://localhost:8082}
+        predicates:
+        - Path=/orders/**
+        - Header=Authorization, Bearer [A-Za-z0-9-_.]*
+        filters:
+        # - PrefixPath=/api
+    #   - id: orders-route-rewrite
+    #     uri: ${ORDERS_ROUTE_REWRITE_URI:http://localhost:8081}
+    #     predicates:
+    #     - Path=/orders/**
+    #     filters:
+    #     - RewritePath=/(?<segment>.*), /users/signin
+   
+logging:
+  level:
+    org.springframework.cloud.gateway.server.mvc: TRACE
+    org.springframework.web: TRACE
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: '*'
+#   endpoint:
+#     health:
+#       show-details: always
+#     gateway:
+#       enabled: true
+  

@@ -1,0 +1,10 @@
+# service-specifc resources
+
+version: "3.7"
+services:
+ # web:
+ #   image: httpd:latest
+ #   container_name: apache
+ #   ports:
+ #     - 8080:80
+  

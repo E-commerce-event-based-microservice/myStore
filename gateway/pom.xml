@@ -8,7 +8,7 @@
     <version>3.2.3</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.example</groupId>
+  <groupId>com.group16</groupId>
   <artifactId>gateway</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>gateway</name>
@@ -34,6 +34,12 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <!-- it seems spring cloud gateway MVC version 
+    doesn't have conflicts with starter-web
+     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency> -->
   </dependencies>
   <dependencyManagement>
     <dependencies>
