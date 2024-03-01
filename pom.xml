@@ -1,110 +1,200 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-      	
+        	
+  
   
   
   <modelVersion>4.0.0</modelVersion>
+    
   <groupId>com.group16</groupId>
+    
   <artifactId>store</artifactId>
+    
   <packaging>pom</packaging>
+    
   <version>0.0.1-SNAPSHOT</version>
+    
   <name>store</name>
-      	
+        	
+  
   
   
   <description>microservices-based, even-driven ecommerce</description>
-        
+          
+  
   
   <modules>
+        
     <module>user</module>
+        
     <module>order</module>
-    <module>inventory</module> 
+        
+    <module>inventory</module>
+     
+    
+    <!-- <module>gateway</module> -->
+      
   </modules>
-    	 
+      	 
 
 	
   
   
+  
   <properties>
+        
     <java.version>17</java.version>
+        
     <spring.boot.dependencies.version>3.2.2</spring.boot.dependencies.version>
+        
     <spring.cloud-version>2023.0.0</spring.cloud-version>
+        
     <spring.boot.maven.plugin.version>3.2.2</spring.boot.maven.plugin.version>
+      
   </properties>
-      	 
+        	 
+  
   
   
   <dependencyManagement>
-    <dependencies>                     
+        
+    <dependencies>
+                           
+      
       <dependency>
+                
         <groupId>org.springframework.boot</groupId>
+                
         <artifactId>spring-boot-dependencies</artifactId>
+                
         <version>${spring.boot.dependencies.version}</version>
+                
         <scope>import</scope>
+                
         <type>pom</type>
+              
       </dependency>
-                              
+                                    
+      
       
       
       <dependency>
+                
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>                    
+                
+        <artifactId>spring-cloud-dependencies</artifactId>
+                            
+        
         <version>${spring.cloud-version}</version>
-          <type>pom</type>
+                  
+        <type>pom</type>
+                
         <scope>import</scope>
-      </dependency>                                
+              
+      </dependency>
+                                      
            
+    
     </dependencies>
+      
   </dependencyManagement>
-      	
+        	
+  
   
   
   <dependencies>
-       <!-- Spring Boot Starter Web -->
+           
+    <!-- Spring Boot Starter Web -->
+        
     <dependency>
+            
       <groupId>org.springframework.boot</groupId>
+            
       <artifactId>spring-boot-starter-web</artifactId>
+          
     </dependency>
+        
     <!-- testing -->
+        
     <dependency>
+            
       <groupId>org.springframework.boot</groupId>
+            
       <artifactId>spring-boot-starter-test</artifactId>
+            
       <scope>test</scope>
+          
     </dependency>
+        
     <!-- JPA -->
+        
     <dependency>
+            
       <groupId>org.springframework.boot</groupId>
+            
       <artifactId>spring-boot-starter-data-jpa</artifactId>
+          
     </dependency>
+        
     <!-- MYSQL Driver -->
-      <dependency>
+          
+    <dependency>
+            
       <groupId>com.mysql</groupId>
+            
       <artifactId>mysql-connector-j</artifactId>
+            
       <scope>runtime</scope>
-      </dependency>
-      <!-- kafka  -->
-      <dependency>
+            
+    </dependency>
+          
+    <!-- kafka  -->
+          
+    <dependency>
+            
       <groupId>org.springframework.kafka</groupId>
+            
       <artifactId>spring-kafka</artifactId>
+            
       <!-- <version>3.1.2</version>  -->
-      </dependency>
-      <dependency>
+            
+    </dependency>
+          
+    <dependency>
+            
       <groupId>org.springframework.kafka</groupId>
+            
       <artifactId>spring-kafka-test</artifactId>
+            
       <scope>test</scope>
-    </dependency>    	
+          
+    </dependency>
+        	
+  
   </dependencies>
-      	
+        	
+  
   
   
   <build>
+        
     <plugins>
+            
       <plugin>
-        <groupId>org.springframework.boot</groupId>                 			
+                
+        <groupId>org.springframework.boot</groupId>
+                         			
+        
         <artifactId>spring-boot-maven-plugin</artifactId>
+                
         <version>${spring.boot.maven.plugin.version}</version>
+              
       </plugin>
-    </plugins>       	
+          
+    </plugins>
+           	
+  
   </build>
-      
+        
+
 </project>
