@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
     
   <version>0.0.1-SNAPSHOT</version>
-    
+ 
   <name>store</name>
         	
   
@@ -193,8 +193,14 @@
         
         <artifactId>spring-boot-maven-plugin</artifactId>
                 
-        <version>${spring.boot.maven.plugin.version}</version>
-              
+        <version>${spring.boot.maven.plugin.version}</version>   
+    <executions>
+        <execution>
+            <goals>
+                <goal>repackage</goal>
+            </goals>
+        </execution>
+    </executions>
       </plugin>
           
     </plugins>

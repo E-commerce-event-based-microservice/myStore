@@ -1,0 +1,19 @@
+# Step 1: Build the entire Maven project
+FROM maven:3.8.3-openjdk-17 as builder
+COPY . /user/src/app
+WORKDIR /user/src/app
+RUN mvn clean package -DskipTests
+
+# Step 2: run user service's jar 
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=builder /user/src/app/user/target/user-*.jar /app/user-service.jar
+ENTRYPOINT ["java", "-jar", "/app/user-service.jar"]
+
+# FROM maven:3.8.1-jdk-11 
+# COPY . /user/src/app
+# WORKDIR /user/src/app/user
+# COPY startup.sh .
+# CMD ["/bin/bash","-c","./startup.sh"]
+# CMD ["/bin/bash", "-c", "echo mvn clean package; echo mvn spring-boot:run"]
+# ENTRYPOINT [ "mvn", "spring-boot:run" ] 
+

@@ -2,11 +2,15 @@
 
 version: "3.7"
 services:
- # web:
- #   image: httpd:latest
- #   container_name: apache
- #   ports:
- #     - 8080:80
+  web:
+   image: abood1/user_service
+   container_name: spring-boot
+   environment:
+    DB_HOST: host.docker.internal
+   networks:
+     - microservice-user 
+   ports:
+     - 8081:8081
   db:
     image: mysql:5.7
     container_name: micorservice-user-mysql
