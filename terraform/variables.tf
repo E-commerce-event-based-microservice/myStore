@@ -54,5 +54,5 @@ variable "orderService_db_password" {
 variable "orderService_db_name" {
   description = "name of the database"
   type        = string
-  default     = "user"
+  default     = "order"
 }

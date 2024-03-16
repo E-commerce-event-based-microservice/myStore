@@ -1,7 +1,7 @@
 output "instance_ip_addr" {
-  value = aws_instance.instance.private_ip
+  value = aws_instance.APIG.public_ip
 }
 
 output "db_instance_addr" {
-  value = aws_db_instance.db_instance.address
+  value = aws_db_instance.userService_RDS_instance.address
 }
