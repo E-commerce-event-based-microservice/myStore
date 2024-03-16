@@ -14,16 +14,6 @@ locals{
     EC2InstanceType = "t2.micro"
 }
 
-# like the return value
-
-output "instance_ip_addr" {
-  value = aws_instance.instance.private_ip
-}
-
-output "db_instance_addr" {
-  value = aws_db_instance.db_instance.address
-}
-
 #  user service database  related
 # at least password will be supplied as env variable
 variable "userService_db_user" {
@@ -56,3 +46,17 @@ variable "orderService_db_name" {
   type        = string
   default     = "order"
 }
+
+# networking related
+variable "public_subnet" {
+  description = "the public subnet that includes the API gateway"
+}
+
+variable "private_subnets" {
+  description = "List of private subnets"
+}
+
+variable "availability_zones" {
+  description = "List of availability zones"
+}
+

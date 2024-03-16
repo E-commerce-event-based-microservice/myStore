@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "5.41.0"
     }
   }
 }
@@ -14,42 +14,51 @@ provider "aws" {
 
 # API gateway
 resource "aws_instance" "APIG" {
+  subnet_id     = aws_subnet.public.id
   ami           = local.EC2InstaceAMI
   instance_type = local.EC2InstanceType
+  user_data = <<-EOF
+              #!/bin/bash
+              echo "Hello, World" > index.html
+              python3 -m http.server 8080 &
+              EOF
    tags = {
-  #  Name = var.instance_name
-     Name = APIGateway
+     Name = "APIGateway"
    }
+    vpc_security_group_ids =  [aws_security_group.allow_internet_traffic.id]
 }
 
-# user service RDS instance
-resource "aws_db_instance" "userService_RDS_instance" {
-  allocated_storage   = 20
-  storage_type        = "gp2"
-  engine              = "mysql"
-  engine_version      = "5.7"
-  instance_class      = "db.t2.micro"
+# the API gatway will be assigned to this security group
+resource "aws_security_group" "allow_internet_traffic" {
+  name        = "allow_http_tls"
+  description = "Allow internet http and TLS inbound traffic and all outbound traffic"
+  vpc_id      = aws_vpc.store-vpc.id
 
-  # TF_VAR_username
-  username            = var.userService_db_user
-  password            = var.userService_db_password
-  name                = var.userService_db_name
-  port                = 3306
-  skip_final_snapshot = true
+  tags = {
+    Name = "allow_http_tls"
+  }
 }
 
-# order service RDS instance
-resource "aws_db_instance" "orderService_RDS_instance" {
-  allocated_storage   = 20
-  storage_type        = "gp2"
-  engine              = "mysql"
-  engine_version      = "5.7"
-  instance_class      = "db.t2.micro"
-
-  # TF_VAR_username
-  username            = var.orderService_db_user
-  password            = var.orderService_db_password
-  name                = var.orderService_db_name
-  port                = 3306
-  skip_final_snapshot = true
+# later I will change it to port 80
+resource "aws_vpc_security_group_ingress_rule" "allow_http" {
+  security_group_id = aws_security_group.allow_internet_traffic.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 8080
+  ip_protocol       = "tcp"
+  to_port           = 8080
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tls" {
+  security_group_id = aws_security_group.allow_internet_traffic.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic" {
+  security_group_id = aws_security_group.allow_internet_traffic.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
