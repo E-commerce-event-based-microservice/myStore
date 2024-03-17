@@ -34,6 +34,8 @@ resource "aws_subnet" "public" {
   }
 }
 
+# To make a subnet public, you attach an internet gateway to your VPC 
+# and add a route to the route table to send non-local traffic through the internet gateway to the internet (0.0.0.0/0
 resource "aws_internet_gateway" "aws-igw" {
   vpc_id = aws_vpc.store-vpc.id
   tags = {
@@ -42,8 +44,7 @@ resource "aws_internet_gateway" "aws-igw" {
 
 }
 
-# To make a subnet public, you attach an internet gateway to your VPC 
-# and add a route to the route table to send non-local traffic through the internet gateway to the internet (0.0.0.0/0
+
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.store-vpc.id
 

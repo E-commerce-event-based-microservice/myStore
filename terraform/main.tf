@@ -25,7 +25,8 @@ resource "aws_instance" "APIG" {
    tags = {
      Name = "APIGateway"
    }
-    vpc_security_group_ids =  [aws_security_group.allow_internet_traffic.id]
+    vpc_security_group_ids =  [aws_security_group.allow_internet_traffic.id, aws_security_group.allow_ssh.id]
+    key_name = "ansible-key"
 }
 
 # the API gatway will be assigned to this security group
@@ -62,3 +63,22 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
+
+# ssh security group
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow ssh inbound traffic"
+  vpc_id      = aws_vpc.store-vpc.id
+
+  tags = {
+    Name = "ssh-sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
+  security_group_id = aws_security_group.allow_ssh.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
