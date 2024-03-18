@@ -12,7 +12,6 @@ locals{
     # Ubuntu 20.04 LTS // us-east-1
     EC2InstaceAMI = "ami-011899242bb902164" 
     EC2InstanceType = "t2.micro"
-    userServiceContainerPOrt = 8081
 }
 
 #  user service database  related
@@ -30,6 +29,11 @@ variable "userService_db_name" {
   description = "name of the database"
   type        = string
   default     = "user"
+}
+variable "userService_db_host" {
+  description = "IP of the database"
+  type        = string
+  default     = "localhost"
 }
 
 #  user service database  related
