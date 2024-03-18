@@ -1,0 +1,10 @@
+# Step 1: Build the entire Maven project
+FROM maven:3.8.3-openjdk-17 as builder
+COPY . /order/src/app
+WORKDIR /order/src/app
+RUN mvn clean package -DskipTests
+
+# Step 2: run user service's jar 
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=builder /order/src/app/order/target/order-*.jar /app/order-service.jar
+ENTRYPOINT ["java", "-jar", "/app/order-service.jar"]

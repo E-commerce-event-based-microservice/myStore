@@ -66,3 +66,33 @@ resource "aws_route" "public" {
   gateway_id             = aws_internet_gateway.aws-igw.id
 }
 
+#  create an EIP 
+resource "aws_eip" "gw" {
+  domain = "vpc"      
+  depends_on = [aws_internet_gateway.aws-igw]
+}
+# create the nat gateway 
+resource "aws_nat_gateway" "gw" {
+  subnet_id     = aws_subnet.public.id
+  # Allocation ID of the Elastic IP address for the NAT Gateway.
+  allocation_id = aws_eip.gw.id
+}
+
+# Create a new route table for the private subnets
+# And make it route non-local traffic through the NAT gateway to the internet
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.store-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.gw.id
+  }
+}
+
+# associate the newly created  private route table to the private subnets (so they don't default to the main route table)
+resource "aws_route_table_association" "private" {
+  # meta argument
+  count          = length(var.private_subnets)
+  subnet_id      = element(aws_subnet.private.*.id, count.index)
+  route_table_id = aws_route_table.private.id
+}
