@@ -65,3 +65,6 @@ variable "availability_zones" {
   description = "List of availability zones"
 }
 
+variable "aws_region" {
+  description = "aws region of deployed app"
+}

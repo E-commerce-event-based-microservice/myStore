@@ -7,7 +7,8 @@ resource "aws_db_instance" "userService_RDS_instance" {
   instance_class      = "db.t2.micro"
   db_subnet_group_name   = aws_db_subnet_group.userService_rds_subnet_group.id
   # multi_az = true
-  #TF_VAR_username
+  # name of the database to create when the DB instance is created
+  db_name = "store"
   username            = var.userService_db_user
   password            = var.userService_db_password
   port                = "3306"
