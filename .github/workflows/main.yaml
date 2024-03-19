@@ -1,7 +1,7 @@
 name: Builb Test and push
 on: [push]
 env:
-  IMAGE_NAME:  user_servic
+  IMAGE_NAME:  user_service
   IMAGE_NAME2: order_service
   IMAGE_NAME3: email_service
   REPO_NAME: abood1
