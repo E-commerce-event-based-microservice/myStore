@@ -2,7 +2,7 @@
 locals{
      userServiceContainerName = "userService"
      userServiceContainerPort = 80
-     userServiceImageURI = "docker.io/abood1/user_servic:latest"
+     userServiceImageURI = "docker.io/abood1/user_service:v1"
     #  kafkaServiceContainerName = "kafka"
     #  kafkaServiceContainerPort = 9090
     #  kafkaServiceKafkaImageURI = "docker.io/confluentinc/cp-kafka:latest"
@@ -59,7 +59,7 @@ resource "aws_ecs_service" "userService" {
   task_definition      = aws_ecs_task_definition.userService.arn
   launch_type          = "FARGATE"
   scheduling_strategy  = "REPLICA"
-  desired_count        = 1
+  desired_count        = 2
 #   deployment_minimum_healthy_percent = "50"
 #   deployment_maximum_percent = "100"      
   force_new_deployment = true

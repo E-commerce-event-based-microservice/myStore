@@ -20,7 +20,7 @@ jobs:
       id: run-docker
       working-directory: .
       run: |
-        docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME:latest && \
+        docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME:v1 && \
           docker ps && sleep 5
    
 
