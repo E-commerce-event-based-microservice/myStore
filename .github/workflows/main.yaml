@@ -1,7 +1,7 @@
 name: Builb Test and push
 on: [push]
 env:
-  IMAGE_NAME:  user_service
+  IMAGE_NAME:  user_service:1.0
   IMAGE_NAME2: order_service
   IMAGE_NAME3: email_service
   REPO_NAME: abood1
@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build user_service image
       run: |
-       docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:1.0 -f user-Dockerfile
+       docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} -f user-Dockerfile
     - name: run docker
       id: run-docker
       working-directory: .
