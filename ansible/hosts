@@ -3,13 +3,11 @@
 ec2-54-224-42-226.compute-1.amazonaws.com
 
 [kafka]
-ec2-54-175-219-165.compute-1.amazonaws.com
-
+ec2-54-226-195-59.compute-1.amazonaws.com
 
 [instances]
 ec2-54-224-42-226.compute-1.amazonaws.com
-ec2-54-175-219-165.compute-1.amazonaws.com
-
+ec2-54-226-195-59.compute-1.amazonaws.com
 
 [instances:vars]
 ansible_ssh_user=ubuntu
