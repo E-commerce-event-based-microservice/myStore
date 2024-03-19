@@ -7,4 +7,4 @@ RUN mvn clean package -DskipTests
 # Step 2: run user service's jar 
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=builder /order/src/app/order/target/order-*.jar /app/order-service.jar
-ENTRYPOINT ["java", "-jar", "/app/order-service.jar"]
+ENTRYPOINT ["java", "-jar", "/app/order-service.jar"] 

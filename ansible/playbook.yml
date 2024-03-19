@@ -1,0 +1,98 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: update Debian
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: update RedHat
+      ansible.builtin.yum:
+        update_cache: yes
+      when: ansible_os_family == 'RedHat'
+
+- hosts: kafka
+  gather_facts: yes
+  become: yes
+  tasks:
+    - ansible.builtin.package:
+        name:
+            - docker
+            - docker-engine
+            - docker.io
+            - containerd
+            - runc
+        state: absent
+
+    - ansible.builtin.package:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: yes
+
+    - name: update Debian
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: update RedHat
+      ansible.builtin.yum:
+        update_cache: yes
+      when: ansible_os_family == 'RedHat'
+
+    - ansible.builtin.shell: "echo $(lsb_release -cs)"
+      register: dist
+
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu "{{ dist.stdout }}" stable
+        state: present
+      become: yes
+
+
+    - name: update Debian
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: update RedHat
+      ansible.builtin.yum:
+        update_cache: yes
+      when: ansible_os_family == 'RedHat'
+
+
+    - ansible.builtin.shell: "dpkg --configure -a"
+      become: yes
+
+
+    - package:
+        name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        state: present
+      become: yes
+
+    - name: Restart service docker, in all cases
+      service:
+        name: docker
+        state: restarted
+      ignore_errors: yes
+      become: yes
+
+    - ansible.builtin.command: docker run hello-world
+      register: docker_output
+
+

@@ -1,0 +1,44 @@
+- hosts: APIG
+  become: true
+  tasks:
+    - name: install java
+      ansible.builtin.package:
+        name: openjdk-17-jdk 
+        name: openjdk-17-jre
+        state: present
+
+    - name: copy jar
+      ansible.builtin.copy:
+        src: ../gateway/target/gateway-0.0.1-SNAPSHOT.jar
+        dest: /home/ubuntu/gateway.jar
+        owner: ubuntu
+        # group: foo
+        mode: '666'
+
+    - name: run jar
+      environment:
+        USERS_ROUTE_URI: internal-store-alb-2056887998.us-east-1.elb.amazonaws.com
+      ansible.builtin.shell:
+        cmd: sudo java -jar gateway.jar
+    
+
+- hosts: kafka
+  tags: kafka
+  become: true
+  tasks:
+    - name: install docker compose 
+      ansible.builtin.package:
+        name: docker-compose
+        state: present
+
+    - name: copy docker compose file
+      ansible.builtin.copy:
+        src: ../docker-compose.yaml
+        dest: /home/ubuntu/docker-compose.yaml
+        owner: ubuntu
+        # group: foo
+        mode: '666'
+
+    - name: run docker-compose
+      ansible.builtin.shell:
+        cmd: docker-compose up -d

@@ -1,7 +1,7 @@
 
 
 server:
- port: 8080
+ port: 80
 
 spring:
   threads:
@@ -10,7 +10,7 @@ spring:
   cloud.gateway.mvc:
     routes:
       - id: users-route
-        uri: ${USERS_ROUTE_URI:http://localhost:8081}
+        uri: ${USERS_ROUTE_URI:http://internal-store-alb-2056887998.us-east-1.elb.amazonaws.com:80}
         predicates:
         - Path=/users/**
         filters:

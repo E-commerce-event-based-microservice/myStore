@@ -44,9 +44,9 @@ resource "aws_security_group" "allow_internet_traffic" {
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.allow_internet_traffic.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 8080
+  from_port         = 80
   ip_protocol       = "tcp"
-  to_port           = 8080
+  to_port           = 80
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls" {
