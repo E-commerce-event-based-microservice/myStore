@@ -2,7 +2,7 @@
 locals{
      userServiceContainerName = "userService"
      userServiceContainerPort = 80
-     userServiceImageURI = "docker.io/abood1/user_servic:latest"
+     userServiceImageURI = "docker.io/abood1/user_service:latest"
     #  kafkaServiceContainerName = "kafka"
     #  kafkaServiceContainerPort = 9090
     #  kafkaServiceKafkaImageURI = "docker.io/confluentinc/cp-kafka:latest"

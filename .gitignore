@@ -69,3 +69,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# private key
+/ansible/ansible-key.pem
