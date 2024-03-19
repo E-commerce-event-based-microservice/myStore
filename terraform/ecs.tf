@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "userService" {
     essential    = true,
     portMappings = [{ containerPort = local.userServiceContainerPort, hostPort = 80 }],
     environment = [
-      { "name":"DB_HOST", "value": "http://terraform-20240318173238800800000001.ctk86q0a21yb.us-east-1.rds.amazonaws.com"}
+      { "name":"DB_HOST", "value": "terraform-20240318222231118600000001.ctk86q0a21yb.us-east-1.rds.amazonaws.com"}
     ],
      "logConfiguration": {
         "logDriver": "awslogs",
@@ -62,7 +62,7 @@ resource "aws_ecs_service" "userService" {
     subnets          = aws_subnet.private.*.id
     assign_public_ip = false
     #   aws_security_group.service_security_group.id,
-    security_groups = [ aws_security_group.load_balancer_security_group.id, aws_security_group.enable_rds.id ]
+    security_groups = [ aws_security_group.load_balancer_security_group.id, aws_security_group.db_access_sg.id ]
   }
 
    # associate a service with target group 
@@ -107,26 +107,26 @@ resource "aws_iam_role_policy_attachment" "ecs_exec_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_security_group" "enable_rds" {
-  vpc_id = aws_vpc.store-vpc.id
+# resource "aws_security_group" "enable_rds" {
+#   vpc_id = aws_vpc.store-vpc.id
 
-  ingress {
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
-
-#   egress {
-#     from_port        = 0
-#     to_port          = 0
-#     protocol         = "-1"
+#   ingress {
+#     from_port        = 3306
+#     to_port          = 3306
+#     protocol         = "tcp"
 #     cidr_blocks      = ["0.0.0.0/0"]
 #   }
-  tags = {
-    Name        = "mysql-inboud"
-  }
-}
+
+# #   egress {
+# #     from_port        = 0
+# #     to_port          = 0
+# #     protocol         = "-1"
+# #     cidr_blocks      = ["0.0.0.0/0"]
+# #   }
+#   tags = {
+#     Name        = "mysql-inboud"
+#   }
+# }
 
 resource "aws_cloudwatch_log_group" "log-group" {
   name = "store-logs"
