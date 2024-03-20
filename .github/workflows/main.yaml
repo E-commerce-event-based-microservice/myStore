@@ -100,7 +100,7 @@
           run: terraform init 
 
         - name: Terraform Apply
-          if: always()
+          continue-on-error: true
           id: apply
           env:
             TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
