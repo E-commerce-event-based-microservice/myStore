@@ -16,29 +16,29 @@ terraform {
 }
 
 # orphan - removed it with terraform state rm <resource>c
-resource "aws_s3_bucket" "terraform_state_bucket" {
-  bucket = "store-abood-terraform-state-bucket"
+# resource "aws_s3_bucket" "terraform_state_bucket" {
+#   bucket = "store-abood-terraform-state-bucket"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+#   lifecycle {
+#     prevent_destroy = true
+#   }
 
-  versioning {
-    enabled = true
-  }
-}
+#   versioning {
+#     enabled = true
+#   }
+# }
 
-resource "aws_dynamodb_table" "terraform_locks" {
-name = "terraform-state-locking"
-billing_mode = "PAY_PER_REQUEST"
-hash_key = "lockID"
+# resource "aws_dynamodb_table" "terraform_locks" {
+# name = "terraform-state-locking"
+# billing_mode = "PAY_PER_REQUEST"
+# hash_key = "lockID"
 
-attribute {
-  name = "lockID"
-  type = "S"
-}
+# attribute {
+#   name = "lockID"
+#   type = "S"
+# }
 
-}
+# }
 
 provider "aws" {
   region = "us-east-1"
