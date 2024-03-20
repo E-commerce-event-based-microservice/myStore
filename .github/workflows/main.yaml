@@ -154,7 +154,7 @@
             #   options: |
             #     --inventory hosts.ini
                 
-            uses: arillso/action.playbook@master
+            uses: actions-ansible@v2
             with:
               playbook: ./ansible/book2.yml
               inventory: ./ansible/hosts.ini
