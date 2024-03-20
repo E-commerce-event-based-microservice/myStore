@@ -1,4 +1,4 @@
-- hosts: "{{APIG}}"
+- hosts: APIG
   tags: APIG
   become: true
   tasks:

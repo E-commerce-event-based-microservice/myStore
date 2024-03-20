@@ -100,13 +100,17 @@
           run: terraform init 
 
         - name: Terraform Apply
+          id: apply
           env:
             TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
             TF_VAR_orderService_db_password: ${{secrets.TF_VAR_orderService_db_password}}
 
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
           run: terraform apply -auto-approve -lock=false -input=false
-      
+          if: steps.apply.outcome == 'failure'
+        - name: delete if apply fails
+          run: terraform destroy
+
     configure: 
         needs: provision
         runs-on: ubuntu-latest
