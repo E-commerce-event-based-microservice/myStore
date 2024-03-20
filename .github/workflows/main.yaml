@@ -9,40 +9,40 @@
   jobs:
   # test:
     
-    build:
-      runs-on: ubuntu-latest
+    # build:
+    #   runs-on: ubuntu-latest
 
-      steps:
-      - uses: actions/checkout@v3
-      - name: Build user_service image
-        run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} -f user-Dockerfile
+    #   steps:
+    #   - uses: actions/checkout@v3
+    #   - name: Build user_service image
+    #     run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} -f user-Dockerfile
         
-      - name: run userService container
-        id: run-userService
-        working-directory: .
-        run: |
-            docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME && \
-            docker ps && sleep 5
+    #   - name: run userService container
+    #     id: run-userService
+    #     working-directory: .
+    #     run: |
+    #         docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME && \
+    #         docker ps && sleep 5
     
 
-      - name: Output running userService summary to console
-        working-directory: .
-        run: echo ${{ steps.run-userService.outputs.summary }}
+    #   - name: Output running userService summary to console
+    #     working-directory: .
+    #     run: echo ${{ steps.run-userService.outputs.summary }}
 
-      - name: Build orderService image 
-        run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME2 }} -f order-Dockerfile
+    #   - name: Build orderService image 
+    #     run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME2 }} -f order-Dockerfile
 
-      - name: run orderService container
-        id: run-orderServiece
-        working-directory: .
-        run: |
-            docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME2 && \
-            docker ps && sleep 5
+    #   - name: run orderService container
+    #     id: run-orderServiece
+    #     working-directory: .
+    #     run: |
+    #         docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME2 && \
+    #         docker ps && sleep 5
     
 
-      - name: Output running orderService summary to console
-        working-directory: .
-        run: echo ${{ steps.run-orderService.outputs.summary }}
+    #   - name: Output running orderService summary to console
+    #     working-directory: .
+    #     run: echo ${{ steps.run-orderService.outputs.summary }}
 
       # - name: Build email_service image 
       #   run:  docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME3 }} -f email-Dockerfile
@@ -59,22 +59,17 @@
       #   working-directory: .
       #   run: echo ${{ steps.run-emailService.outputs.summary }}
 
-    # push:
-    #   needs: build
-    #   runs-on: ubuntu-latest
-    #   steps:
+      # - name: Login to Container Registry
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.REGISTRY_USERNAME }}
+      #     password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Login to Container Registry
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+      # - name: Push userServie to docker hub 
+      #   run: docker push $REPO_NAME/$IMAGE_NAME
 
-      - name: Push userServie to docker hub 
-        run: docker push $REPO_NAME/$IMAGE_NAME
-
-      - name: push order_service image to docker hub
-        run:  docker push $REPO_NAME/$IMAGE_NAME2
+      # - name: push order_service image to docker hub
+      #   run:  docker push $REPO_NAME/$IMAGE_NAME2
 
       # - name: push order_service image to docker hub
       #   run:  docker push $REPO_NAME/$IMAGE_NAME3
@@ -102,7 +97,7 @@
             terraform_version: 1.3.7
           # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
         - name: Terraform Init
-          run: terraform init 
+          run: terraform init && terrform force-unlock 
 
         - name: Terraform Apply
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
