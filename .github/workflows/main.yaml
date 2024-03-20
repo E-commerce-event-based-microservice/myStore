@@ -142,15 +142,21 @@
           #         --inventory hosts.ini
 
           - name: Run playbook book2.yml
-            uses: dawidd6/action-ansible-playbook@v2
+            # uses: dawidd6/action-ansible-playbook@v2
+            # with:
+            #   # Required, playbook filepath
+            #   playbook: book2.yml
+            #   # Optional, directory where playbooks live
+            #   directory: ./ansible
+            #   # Optional, SSH private key
+            #   key: ${{secrets.SSH_PRIVATE_KEY}}
+            #   # Optional, additional flags to pass to ansible-playbook
+            #   options: |
+            #     --inventory hosts.ini
+                
+            uses: arillso/action.playbook@master
             with:
-              # Required, playbook filepath
-              playbook: book2.yml
-              # Optional, directory where playbooks live
-              directory: ./ansible
-              # Optional, SSH private key
-              key: ${{secrets.SSH_PRIVATE_KEY}}
-              # Optional, additional flags to pass to ansible-playbook
-              options: |
-                --inventory hosts.ini
+              playbook: ./ansible/book2.yml
+              inventory: ./ansible/hosts.ini
+
 
