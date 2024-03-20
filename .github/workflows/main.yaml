@@ -80,7 +80,7 @@
       #   run:  docker push $REPO_NAME/$IMAGE_NAME3
      
     provision:
-       needs: push
+       needs: build
        runs-on: ubuntu-latest
        defaults:
         run:
