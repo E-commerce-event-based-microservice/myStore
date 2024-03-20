@@ -108,8 +108,8 @@
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
           run: terraform apply -auto-approve -lock=false  -input=false
          
-        - name: destroy null resource
-          run: terraform destroy -auto-approve -lock=false -target null_resource.update_inventory
+        # - name: destroy null resource
+        #   run: terraform destroy -auto-approve -lock=false -target null_resource.update_inventory
         - name: apply null resource
           run: terraform apply -auto-approve -lock=false -target null_resource.update_inventory
 

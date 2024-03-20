@@ -20,7 +20,7 @@
       environment:
         USERS_ROUTE_URI: internal-store-alb-2056887998.us-east-1.elb.amazonaws.com
       ansible.builtin.shell:
-        cmd: nohup sudo java -jar gateway.jar
+        cmd: nohup sudo java -jar gateway.jar &
     
 
 - hosts: kafka
