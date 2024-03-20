@@ -55,18 +55,22 @@ variable "orderService_db_name" {
 # networking related
 variable "public_subnet" {
   description = "the public subnet that includes the API gateway"
+  default = "10.0.1.0/24"
 }
 
 variable "private_subnets" {
   description = "List of private subnets"
+  default = ["10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "availability_zones" {
   description = "List of availability zones"
+  default = ["us-east-1a", "us-east-1b"]
 }
 
 variable "aws_region" {
   description = "aws region of deployed app"
+  default = "us-east-1"
 }
 
 #env 
