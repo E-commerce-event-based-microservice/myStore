@@ -125,7 +125,7 @@
                 key: ${{secrets.SSH_PRIVATE_KEY}}
                 # Optional, additional flags to pass to ansible-playbook
                 options: |
-                  --inventory .hosts.ini
+                  --inventory hosts.ini
 
           - name: Run playbook book2.yml
             uses: dawidd6/action-ansible-playbook@v2
@@ -138,5 +138,5 @@
               key: ${{secrets.SSH_PRIVATE_KEY}}
               # Optional, additional flags to pass to ansible-playbook
               options: |
-                --inventory .hosts.ini
+                --inventory hosts.ini
 
