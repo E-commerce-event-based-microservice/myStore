@@ -100,7 +100,7 @@
           run: terraform init 
 
         - name: Terraform Apply
-          continue-on-error: true
+          # continue-on-error: true
           id: apply
           env:
             TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
@@ -108,6 +108,12 @@
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
           run: terraform apply -auto-approve -lock=false  -input=false
          
+        - name: destroy null resource
+          run: terraform destroy -lock=false -target null_resource.update_inventory
+        - name: apply null resource
+          run: terraform apply -lock=false -target null_resource.update_inventory
+
+
         # - name: delete if apply fails
         #   if: steps.apply.outcome == 'failure'
         #   run: terraform destroy
