@@ -144,7 +144,7 @@
               # Required, playbook filepath
               playbook: book2.yml
               # Optional, directory where playbooks live
-              directory: .
+              directory: ./ansible
               # Optional, SSH private key
               key: ${{secrets.SSH_PRIVATE_KEY}}
               # Optional, additional flags to pass to ansible-playbook
