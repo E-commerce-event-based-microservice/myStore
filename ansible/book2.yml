@@ -15,6 +15,7 @@
         owner: ubuntu
         # group: foo
         mode: '666'
+        remote_src: yes
 
     - name: run jar
       environment:
