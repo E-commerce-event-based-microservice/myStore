@@ -37,10 +37,10 @@ build/
 # Local .terraform directories
 **/.terraform/*
 
-# for now, until I used remote backend
+# for now, until I used remote backend ( I did :)
 # .tfstate files
-#*.tfstate
-#.tfstate.*
+*.tfstate
+.tfstate.*
 
 # Crash log files
 crash.log
