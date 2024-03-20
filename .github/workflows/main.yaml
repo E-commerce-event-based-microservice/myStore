@@ -108,9 +108,9 @@
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
           run: terraform apply -auto-approve -lock=false  -input=false
          
-        - name: delete if apply fails
-          if: steps.apply.outcome == 'failure'
-          run: terraform destroy
+        # - name: delete if apply fails
+        #   if: steps.apply.outcome == 'failure'
+        #   run: terraform destroy
 
     configure: 
         needs: provision
