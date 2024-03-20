@@ -68,3 +68,13 @@ variable "availability_zones" {
 variable "aws_region" {
   description = "aws region of deployed app"
 }
+
+#env 
+# variable "APIG_dns"{
+#   description = "dns of API gateway "
+# }
+
+#env 
+# variable "userService_rds_dns"{
+#   description = "dns of userService dns"
+# }

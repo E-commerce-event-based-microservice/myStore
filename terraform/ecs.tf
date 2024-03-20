@@ -2,7 +2,7 @@
 locals{
      userServiceContainerName = "userService"
      userServiceContainerPort = 80
-     userServiceImageURI = "docker.io/abood1/user_service"
+     userServiceImageURI = "docker.io/abood1/user_service:1.0"
     #  kafkaServiceContainerName = "kafka"
     #  kafkaServiceContainerPort = 9090
     #  kafkaServiceKafkaImageURI = "docker.io/confluentinc/cp-kafka:latest"
@@ -27,8 +27,8 @@ resource "aws_ecs_task_definition" "userService" {
     essential    = true,
     portMappings = [{ containerPort = local.userServiceContainerPort, hostPort = 80 }],
     environment = [
-      { "name":"DB_HOST", "value": "terraform-20240318222231118600000001.ctk86q0a21yb.us-east-1.rds.amazonaws.com"},
-      { "name":"KAFKA_HOST", "value": "ec2-54-198-251-208.compute-1.amazonaws.com"}
+      { "name":"DB_HOST", "value": "${aws_db_instance.userService_RDS_instance.address}"},
+      { "name":"KAFKA_HOST", "value": "${aws_instance.kafka.public_dns}"}
 
     ],
      "logConfiguration": {
@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "userService" {
           "awslogs-stream-prefix": "store"
         }
       },
-    
+    depends_on = [aws_db_instance.userService_RDS_instance, aws_instance.kafka]
   }])
 }
 
@@ -60,8 +60,8 @@ resource "aws_ecs_service" "userService" {
   launch_type          = "FARGATE"
   scheduling_strategy  = "REPLICA"
   desired_count        = 2
-#   deployment_minimum_healthy_percent = "50"
-#   deployment_maximum_percent = "100"      
+  deployment_minimum_healthy_percent = 0
+  #deployment_maximum_percent = 100     
   force_new_deployment = true
 
   network_configuration {
