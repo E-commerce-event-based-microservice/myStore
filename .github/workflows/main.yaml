@@ -1,52 +1,106 @@
-name: Builb Test and push
-on: [push]
-env:
-  IMAGE_NAME:  user_service:1.0
-  IMAGE_NAME2: order_service
-  IMAGE_NAME3: email_service
-  REPO_NAME: abood1
- 
-  
+  name: Build Test push deploy configure
+  on: [push, pull_request]
+  env:
+    IMAGE_NAME:  user_service
+    IMAGE_NAME2: order_service
+    IMAGE_NAME3: email_service
+    REPO_NAME: abood1
+    
+  jobs:
+  # test:
+    
+    build:
+      runs-on: ubuntu-latest
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build user_service image
-      run: |
-       docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} -f user-Dockerfile
-    - name: run docker
-      id: run-docker
-      working-directory: .
-      run: |
-        docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME && \
-          docker ps && sleep 5
-   
+      steps:
+      - uses: actions/checkout@v3
+      - name: Build user_service image
+        run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} -f user-Dockerfile
+        
+      - name: run userService container
+        id: run-userService
+        working-directory: .
+        run: |
+            docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME && \
+            docker ps && sleep 5
+    
 
-    - name: Output summary to console
-      working-directory: .
-      run: echo ${{ steps.run-docker.outputs.summary }}
+      - name: Output running userService summary to console
+        working-directory: .
+        run: echo ${{ steps.run-userService.outputs.summary }}
 
-    # building the order service
-    - name: Build order_service image 
-      run: |
-       docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME2 }} -f order-Dockerfile
+      - name: Build orderService image 
+        run: docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME2 }} -f order-Dockerfile
 
-    # - name: Build email_service image 
-    #   run: |
-    #    docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME2 }} -f email-Dockerfile
+      - name: run orderService container
+        id: run-orderServiece
+        working-directory: .
+        run: |
+            docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME2 && \
+            docker ps && sleep 5
+    
 
-    - name: Login to Container Registry
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Output running orderService summary to console
+        working-directory: .
+        run: echo ${{ steps.run-orderService.outputs.summary }}
 
-    - name: Push image to docker hub Container Registry
-      run: | 
-          docker push $REPO_NAME/$IMAGE_NAME
-     # pushing the order_service
-    - name: push order_service image to docker hub
-      run: | 
-          docker push $REPO_NAME/$IMAGE_NAME2
+      # - name: Build email_service image 
+      #   run:  docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME3 }} -f email-Dockerfile
+
+      # - name: run emailService container
+      #   id: run-emailServiece
+      #   working-directory: .
+      #   run: |
+      #       docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME3 && \
+      #       docker ps && sleep 5
+    
+
+      # - name: Output running emailService summary to console
+      #   working-directory: .
+      #   run: echo ${{ steps.run-emailService.outputs.summary }}
+
+    push:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Push userServie to docker hub 
+        run: docker push $REPO_NAME/$IMAGE_NAME
+
+      - name: push order_service image to docker hub
+        run:  docker push $REPO_NAME/$IMAGE_NAME2
+
+      # - name: push order_service image to docker hub
+      #   run:  docker push $REPO_NAME/$IMAGE_NAME3
+     
+    provision:
+       needs: build
+       runs-on: ubuntu-latest
+       defaults:
+        run:
+          working-directory: ./terraform
+       env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+
+       steps:
+        # Checkout the repository to the GitHub Actions runner
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        # Install the preferred version of Terraform CLI 
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v3
+          with:
+            terraform_version: 1.3.7
+
+        - name: Terraform Apply
+          # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+          run: terraform apply -auto-approve
