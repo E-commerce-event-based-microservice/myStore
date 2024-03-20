@@ -129,6 +129,11 @@
             uses: actions/checkout@v3
 
           - name: Run playbook named playbook
+            uses: actions-ansible@v2
+            with:
+              playbook: ./ansible/book2.yml
+              inventory: ./ansible/hosts.ini
+              
           #   uses: dawidd6/action-ansible-playbook@v2
           #   with:
           #       # Required, playbook filepath
@@ -154,9 +159,5 @@
           #     options: |
           #       --inventory hosts.ini
               
-            uses: actions-ansible@v2
-            with:
-              playbook: ./ansible/book2.yml
-              inventory: ./ansible/hosts.ini
-              
+           
 
