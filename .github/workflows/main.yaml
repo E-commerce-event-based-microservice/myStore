@@ -104,11 +104,11 @@
           env:
             TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
             TF_VAR_orderService_db_password: ${{secrets.TF_VAR_orderService_db_password}}
-
           # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-          run: terraform apply -auto-approve  -input=false
-          if: steps.apply.outcome == 'failure'
+          run: terraform apply -auto-approve -lock=false  -input=false
+         
         - name: delete if apply fails
+          if: steps.apply.outcome == 'failure'
           run: terraform destroy
 
     configure: 
