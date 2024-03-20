@@ -59,10 +59,10 @@
       #   working-directory: .
       #   run: echo ${{ steps.run-emailService.outputs.summary }}
 
-    push:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
+    # push:
+    #   needs: build
+    #   runs-on: ubuntu-latest
+    #   steps:
 
       - name: Login to Container Registry
         uses: docker/login-action@v1
@@ -80,7 +80,7 @@
       #   run:  docker push $REPO_NAME/$IMAGE_NAME3
      
     provision:
-       needs: build
+       needs: push
        runs-on: ubuntu-latest
        defaults:
         run:
