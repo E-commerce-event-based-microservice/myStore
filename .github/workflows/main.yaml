@@ -141,7 +141,7 @@
           #       options: |
           #         --inventory hosts.ini
 
-          - name: Run playbook book2.yml
+          - name: Run  nnnn playbook book2.yml
             # uses: dawidd6/action-ansible-playbook@v2
             # with:
             #   # Required, playbook filepath
