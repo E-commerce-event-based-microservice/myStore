@@ -65,7 +65,7 @@ resource "aws_instance" "APIG" {
   # Copies 
   provisioner "file" {
     source      = "gateway/target/gateway-0.0.1-SNAPSHOT.jar"
-    destination = "/gatewa.jar"
+    destination = "/home/ubuntu/gateway.jar"
 
     connection {
     type     = "ssh"
