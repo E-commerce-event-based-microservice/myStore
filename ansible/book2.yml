@@ -10,7 +10,7 @@
 
     - name: copy gateway jar
       ansible.builtin.copy:
-        src: ../../gateway/target/gateway-0.0.1-SNAPSHOT.jar
+        src: gateway/target/
         dest: /home/ubuntu/gateway.jar
         owner: ubuntu
         # group: foo
