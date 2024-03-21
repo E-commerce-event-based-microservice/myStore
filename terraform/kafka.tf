@@ -2,7 +2,7 @@
 resource "aws_instance" "kafka" {
   subnet_id     = aws_subnet.public.id
   ami           = local.EC2InstaceAMI
-  instance_type = "t2.small"
+  instance_type = "t2.large"
 #   user_data = <<-EOF
 #               #!/bin/bash
 #               echo "Hello, World" > index.html
