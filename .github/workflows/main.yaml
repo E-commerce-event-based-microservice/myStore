@@ -129,35 +129,37 @@
             uses: actions/checkout@v3
 
           - name: Run playbook named playbook
+            uses: dawidd6/action-ansible-playbook@v2
+            with:
+                # Required, playbook filepath
+                playbook: playbook.yml
+                # Optional, directory where playbooks live
+                directory: ./ansible
+                # Optional, SSH private key
+                key: ${{secrets.SSH_PRIVATE_KEY}}
+                # Optional, additional flags to pass to ansible-playbook
+                options: |
+                  --inventory hosts.ini
+
+          - name: Runplaybook book2.yml
             uses: actions-ansible@v2
             with:
               playbook: ./ansible/book2.yml
-              inventory: ./ansible/hosts.ini
-              
-          #   uses: dawidd6/action-ansible-playbook@v2
-          #   with:
-          #       # Required, playbook filepath
-          #       playbook: playbook.yml
-          #       # Optional, directory where playbooks live
-          #       directory: ./ansible
-          #       # Optional, SSH private key
-          #       key: ${{secrets.SSH_PRIVATE_KEY}}
-          #       # Optional, additional flags to pass to ansible-playbook
-          #       options: |
-          #         --inventory hosts.ini
+              inventory: ./ansible/hosts.ini  
 
-          # - name: Runplaybook book2.yml
-          #   uses: dawidd6/action-ansible-playbook@v2
-          #   with:
-          #     # Required, playbook filepath
-          #     playbook: book2.yml
-          #     # Optional, directory where playbooks live
-          #     directory: ./ansible
-          #     # Optional, SSH private key
-          #     key: ${{secrets.SSH_PRIVATE_KEY}}
-          #     # Optional, additional flags to pass to ansible-playbook
-          #     options: |
-          #       --inventory hosts.ini
-              
+            # uses: dawidd6/action-ansible-playbook@v2
+            # with:
+            #   # Required, playbook filepath
+            #   playbook: book2.yml
+            #   # Optional, directory where playbooks live
+            #   directory: ./ansible
+            #   # Optional, SSH private key
+            #   key: ${{secrets.SSH_PRIVATE_KEY}}
+            #   # Optional, additional flags to pass to ansible-playbook
+            #   options: |
+            #     --inventory hosts.ini
+
+          
            
 
+   

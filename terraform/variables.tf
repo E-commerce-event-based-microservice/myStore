@@ -28,7 +28,7 @@ variable "userService_db_password" {
 variable "userService_db_name" {
   description = "name of the database"
   type        = string
-  default     = "user"
+  default     = "userDB"
 }
 variable "userService_db_host" {
   description = "IP of the database"
@@ -49,9 +49,14 @@ variable "orderService_db_password" {
 variable "orderService_db_name" {
   description = "name of the database"
   type        = string
-  default     = "order"
+  default     = "orderDB"
 }
 
+variable "orderService_db_host" {
+  description = "IP of the database"
+  type        = string
+  default     = "localhost"
+}
 # networking related
 variable "public_subnet" {
   description = "the public subnet that includes the API gateway"
