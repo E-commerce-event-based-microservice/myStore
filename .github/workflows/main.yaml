@@ -146,8 +146,8 @@
             with:
               # Required, playbook filepath
               playbook: ./ansible/book2.yml
-              # Optional, directory where playbooks live
-              # directory: ./ansible
+              #Optional, directory where playbooks live
+              directory: ./
               # Optional, SSH private key
               key: ${{secrets.SSH_PRIVATE_KEY}}
               # Optional, additional flags to pass to ansible-playbook
