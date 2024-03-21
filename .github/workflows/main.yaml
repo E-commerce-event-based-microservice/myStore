@@ -71,8 +71,8 @@
       - name: push order_service image to docker hub
         run:  docker push $REPO_NAME/$IMAGE_NAME2
 
-      - name: push order_service image to docker hub
-        run:  docker push $REPO_NAME/$IMAGE_NAME3
+      # - name: push email_service image to docker hub
+      #   run:  docker push $REPO_NAME/$IMAGE_NAME3
      
     provision:
        needs: build
