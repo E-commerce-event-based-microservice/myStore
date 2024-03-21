@@ -66,11 +66,12 @@ resource "aws_instance" "APIG" {
   provisioner "file" {
     source      = "gateway/target/gateway-0.0.1-SNAPSHOT.jar"
     destination = "/gatewa.jar"
+
     connection {
     type     = "winrm"
-    user     = "Administrator"
-    password = "ubuntu"
-    host     = "${var.host}"
+    user     = "ubuntu"
+    private_key = "${var.SSH_key}"
+    host     = "${aws_instance.APIG.public_dns}"
   }
   }
 }
