@@ -141,7 +141,7 @@
                 options: |
                   --inventory hosts.ini
 
-          - name: Runplaybook book2.yml
+          - name: Run playbook book2.yml
             uses: actions-ansible@v2
             with:
               playbook: ./ansible/book2.yml
