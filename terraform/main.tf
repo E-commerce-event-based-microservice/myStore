@@ -61,6 +61,18 @@ resource "aws_instance" "APIG" {
    }
     vpc_security_group_ids =  [aws_security_group.allow_internet_traffic.id, aws_security_group.allow_ssh.id]
     key_name = "ansible-key"
+
+  # Copies 
+  provisioner "file" {
+    source      = "gateway/target/gateway-0.0.1-SNAPSHOT.jar"
+    destination = "/gatewa.jar"
+    connection {
+    type     = "winrm"
+    user     = "Administrator"
+    password = "ubuntu"
+    host     = "${var.host}"
+  }
+  }
 }
 
 # the API gatway will be assigned to this security group
