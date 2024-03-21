@@ -68,10 +68,10 @@ resource "aws_instance" "APIG" {
     destination = "/gatewa.jar"
 
     connection {
-    type     = "winrm"
+    type     = "ssh"
     user     = "ubuntu"
-    private_key = "${var.SSH_key}"
     host     = "${aws_instance.APIG.public_dns}"
+    private_key = var.SSH_key
   }
   }
 }
