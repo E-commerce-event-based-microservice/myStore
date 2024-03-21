@@ -80,6 +80,9 @@ variable "aws_region" {
 
 variable "SSH_key" {
   description = "key to access API gateway and kafka and provisione files"
+
+
+
 }
 #env 
 # variable "APIG_dns"{
