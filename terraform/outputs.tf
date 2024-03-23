@@ -8,3 +8,7 @@ output "userService_rds_dns" {
 output "kafka_dns" {
   value = aws_instance.kafka.public_dns
   }
+
+output "alb_dns" {
+  value = aws_alb.application_load_balancer.dns_name
+  }
