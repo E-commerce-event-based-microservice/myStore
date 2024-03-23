@@ -47,7 +47,6 @@ provider "aws" {
 
 
 # API gateway
-# later I need to add the address of loadbalancer as environment variable
 resource "aws_instance" "APIG" {
   subnet_id     = aws_subnet.public.id
   ami           = local.EC2InstaceAMI
@@ -62,20 +61,22 @@ resource "aws_instance" "APIG" {
    }
     vpc_security_group_ids =  [aws_security_group.allow_internet_traffic.id, aws_security_group.allow_ssh.id]
     key_name = "ansible-key"
+}
 
   # Copies 
-  provisioner "file" {
-    source      = "../gateway/target/gateway-0.0.1-SNAPSHOT.jar"
-    destination = "/home/ubuntu/gateway.jar"
+# not needed as it's done through ansible now
+#   provisioner "file" {
+#     source      = "../gateway/target/gateway-0.0.1-SNAPSHOT.jar"
+#     destination = "/home/ubuntu/gateway.jar"
 
-    connection {
-    type     = "ssh"
-    user     = "ubuntu"
-    host     = "${aws_instance.APIG.public_dns}"
-    private_key = var.SSH_key
-  }
-  }
-}
+#     connection {
+#     type     = "ssh"
+#     user     = "ubuntu"
+#     host     = "${aws_instance.APIG.public_dns}"
+#     private_key = var.SSH_key
+#   }
+#   }
+# }
 
 # the API gatway will be assigned to this security group
 resource "aws_security_group" "allow_internet_traffic" {
@@ -88,7 +89,7 @@ resource "aws_security_group" "allow_internet_traffic" {
   }
 }
 
-# later I will change it to port 80
+
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.allow_internet_traffic.id
   cidr_ipv4         = "0.0.0.0/0"

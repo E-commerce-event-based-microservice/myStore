@@ -78,12 +78,11 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "SSH_key" {
-  description = "key to access API gateway and kafka and provisione files"
+# not needed anymore as configuring the gateway is done through ansible now
+# variable "SSH_key" {
+#   description = "key to access API gateway and kafka and provisione files"
+# }
 
-
-
-}
 #env 
 # variable "APIG_dns"{
 #   description = "dns of API gateway "

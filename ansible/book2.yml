@@ -16,7 +16,7 @@
         mode: '666'
         # remote_src: yes
 
-    - name: run jar
+    - name: run gateway jar
       environment:
         USERS_ROUTE_URI: "{{albIp}}"
       ansible.builtin.shell:
@@ -40,6 +40,6 @@
         # group: foo
         mode: '666'
 
-    - name: run docker-compose
+    - name: run docker-compose to setup kafka and zookeeper
       ansible.builtin.shell:
         cmd: sudo docker-compose up -d
