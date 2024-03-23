@@ -1,7 +1,7 @@
 [APIG]
 ${APIG} 
 
-[APIG:alpIp]
+[APIG:vars]
 albIp=${albIp}
 
 [kafka]
