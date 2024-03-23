@@ -143,24 +143,24 @@
           - name: Checkout
             uses: actions/checkout@v3
 
-          - name: Run playbook named playbook
-            uses: dawidd6/action-ansible-playbook@v2
-            with:
-                # Required, playbook filepath
-                playbook: playbook.yml
-                # Optional, directory where playbooks live
-                directory: ./ansible
-                # Optional, SSH private key
-                key: ${{secrets.SSH_PRIVATE_KEY}}
-                # Optional, additional flags to pass to ansible-playbook
-                options: |
-                  --inventory hosts.ini
-          - name: Setup java
-            uses: actions/setup-java@v1
-            with:
-             java-version: 17   
-          - run: mvn clean package
-            working-directory: ./gateway
+          # - name: Run playbook named playbook
+          #   uses: dawidd6/action-ansible-playbook@v2
+          #   with:
+          #       # Required, playbook filepath
+          #       playbook: playbook.yml
+          #       # Optional, directory where playbooks live
+          #       directory: ./ansible
+          #       # Optional, SSH private key
+          #       key: ${{secrets.SSH_PRIVATE_KEY}}
+          #       # Optional, additional flags to pass to ansible-playbook
+          #       options: |
+          #         --inventory hosts.ini
+          # - name: Setup java
+          #   uses: actions/setup-java@v1
+          #   with:
+          #    java-version: 17   
+          # - run: mvn clean package
+          #   working-directory: ./gateway
 
           - name: Run playbook book2.yml
             uses: dawidd6/action-ansible-playbook@v2
