@@ -1,7 +1,2 @@
-# Template 
-microservices, spring boot template
-
-## Guidelines:
-* Don't work on the main/master branch. Create you own branches :warning: 
-* Document your code as much as possible :white_check_mark:
-* keep an eye on the readme, other guideliens could be written later :grin:
+# Note 
+This is the repo I used to setup the infrastructure on AWS using terraform and buidling the CI/CD pipeline. Later, I finalized everything on the branch DVOP_0030_Deployment and merged it to the main in the team repo "store".
