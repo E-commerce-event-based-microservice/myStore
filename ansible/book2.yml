@@ -14,7 +14,7 @@
         dest: /home/ubuntu/gateway.jar
         owner: ubuntu
         mode: '666'
-        remote_src: yes
+        # remote_src: yes
 
     - name: run jar
       environment:
