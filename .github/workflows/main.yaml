@@ -1,5 +1,13 @@
   name: Build Test push deploy 
-  on: [push, pull_request]
+  #  [push, pull_request]
+  on:
+     push:
+      branches:
+        - master
+     pull_request:
+      branches:
+        - master
+    
   env:
     IMAGE_NAME:  user_service
     IMAGE_NAME2: order_service

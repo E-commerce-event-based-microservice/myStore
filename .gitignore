@@ -72,3 +72,5 @@ terraform.rc
 
 # private key
 /ansible/ansible-key.pem
+
+.DS_store

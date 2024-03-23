@@ -47,6 +47,7 @@ provider "aws" {
 
 
 # API gateway
+# later I need to add the address of loadbalancer as environment variable
 resource "aws_instance" "APIG" {
   subnet_id     = aws_subnet.public.id
   ami           = local.EC2InstaceAMI

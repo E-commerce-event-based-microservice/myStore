@@ -1,5 +1,5 @@
 [APIG]
-${APIG}
+${APIG} albIp=${albIp}
 
 [kafka]
 ${kafka}

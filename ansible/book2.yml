@@ -18,7 +18,7 @@
 
     - name: run jar
       environment:
-        USERS_ROUTE_URI: internal-store-alb-2056887998.us-east-1.elb.amazonaws.com
+        USERS_ROUTE_URI: {{alpIp}}
       ansible.builtin.shell:
         cmd: nohup sudo java -jar gateway.jar &
     
