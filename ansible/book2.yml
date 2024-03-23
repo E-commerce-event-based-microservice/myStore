@@ -8,13 +8,13 @@
         name: openjdk-17-jre
         state: present
 
-    # - name: copy gateway jar
-    #   ansible.builtin.copy:
-    #     src:  gateway/target/gateway-0.0.1-SNAPSHOT.jar
-    #     dest: /home/ubuntu/gateway.jar
-    #     owner: ubuntu
-    #     mode: '666'
-        # remote_src: yes
+    - name: copy gateway jar
+      ansible.builtin.copy:
+        src:  ../gateway/target/gateway-0.0.1-SNAPSHOT.jar
+        dest: /home/ubuntu/gateway.jar
+        owner: ubuntu
+        mode: '666'
+        remote_src: yes
 
     - name: run jar
       environment:

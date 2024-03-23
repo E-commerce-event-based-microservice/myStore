@@ -82,46 +82,46 @@
       # - name: push email_service image to docker hub
       #   run:  docker push $REPO_NAME/$IMAGE_NAME3
      
-    provision:
-      #  needs: build
-       runs-on: ubuntu-latest
-       defaults:
-        run:
-          working-directory: ./terraform
-       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+    # provision:
+    #   #  needs: build
+    #    runs-on: ubuntu-latest
+    #    defaults:
+    #     run:
+    #       working-directory: ./terraform
+    #    env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_REGION: ${{ secrets.AWS_REGION }}
 
-       steps:
-        # Checkout the repository to the GitHub Actions runner
-        - name: Checkout
-          uses: actions/checkout@v3
+    #    steps:
+    #     # Checkout the repository to the GitHub Actions runner
+    #     - name: Checkout
+    #       uses: actions/checkout@v3
   
-        - name: Setup java to compile the gateway
-          uses: actions/setup-java@v1
-          with:
-           java-version: 17   
-        - run: mvn clean package
-          working-directory: ./gateway
-        # Install the preferred version of Terraform CLI 
-        - name: Setup Terraform
-          uses: hashicorp/setup-terraform@v3
-          with:
-            terraform_version: 1.3.7
-          # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-        - name: Terraform Init
-          run: terraform init 
+    #     - name: Setup java to compile the gateway
+    #       uses: actions/setup-java@v1
+    #       with:
+    #        java-version: 17   
+    #     - run: mvn clean package
+    #       working-directory: ./gateway
+    #     # Install the preferred version of Terraform CLI 
+    #     - name: Setup Terraform
+    #       uses: hashicorp/setup-terraform@v3
+    #       with:
+    #         terraform_version: 1.3.7
+    #       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    #     - name: Terraform Init
+    #       run: terraform init 
 
-        - name: Terraform Apply
-          # continue-on-error: true
-          id: apply
-          env:
-            TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
-            TF_VAR_orderService_db_password: ${{secrets.TF_VAR_orderService_db_password}}
-            TF_VAR_SSH_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-          run: terraform apply -auto-approve -lock=false  -input=false
+    #     - name: Terraform Apply
+    #       # continue-on-error: true
+    #       id: apply
+    #       env:
+    #         TF_VAR_userService_db_password: ${{secrets.TF_VAR_userService_db_password}}
+    #         TF_VAR_orderService_db_password: ${{secrets.TF_VAR_orderService_db_password}}
+    #         TF_VAR_SSH_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #       run: terraform apply -auto-approve -lock=false  -input=false
          
         # - name: destroy null resource
         #   run: terraform destroy -auto-approve -lock=false -target null_resource.update_inventory
@@ -134,7 +134,7 @@
         #   run: terraform destroy
 
     configure: 
-        needs: provision
+        # needs: provision
         runs-on: ubuntu-latest
         defaults:
          run:
@@ -143,24 +143,24 @@
           - name: Checkout
             uses: actions/checkout@v3
 
-          # - name: Run playbook named playbook
-          #   uses: dawidd6/action-ansible-playbook@v2
-          #   with:
-          #       # Required, playbook filepath
-          #       playbook: playbook.yml
-          #       # Optional, directory where playbooks live
-          #       directory: ./ansible
-          #       # Optional, SSH private key
-          #       key: ${{secrets.SSH_PRIVATE_KEY}}
-          #       # Optional, additional flags to pass to ansible-playbook
-          #       options: |
-          #         --inventory hosts.ini
-          # - name: Setup java
-          #   uses: actions/setup-java@v1
-          #   with:
-          #    java-version: 17   
-          # - run: mvn clean package
-          #   working-directory: ./gateway
+          - name: Run playbook named playbook
+            uses: dawidd6/action-ansible-playbook@v2
+            with:
+                # Required, playbook filepath
+                playbook: playbook.yml
+                # Optional, directory where playbooks live
+                directory: ./ansible
+                # Optional, SSH private key
+                key: ${{secrets.SSH_PRIVATE_KEY}}
+                # Optional, additional flags to pass to ansible-playbook
+                options: |
+                  --inventory hosts.ini
+          - name: Setup java
+            uses: actions/setup-java@v1
+            with:
+             java-version: 17   
+          - run: mvn clean package
+            working-directory: ./gateway
 
           - name: Run playbook book2.yml
             uses: dawidd6/action-ansible-playbook@v2
