@@ -18,7 +18,7 @@
 
     - name: run jar
       environment:
-        USERS_ROUTE_URI: {{alpIp}}
+        USERS_ROUTE_URI: "{{alpIp}}"
       ansible.builtin.shell:
         cmd: nohup sudo java -jar gateway.jar &
     
