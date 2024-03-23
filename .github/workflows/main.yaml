@@ -155,12 +155,12 @@
           #       # Optional, additional flags to pass to ansible-playbook
           #       options: |
           #         --inventory hosts.ini
-          # - name: Setup java
-          #   uses: actions/setup-java@v1
-          #   with:
-          #    java-version: 17   
-          # - run: mvn clean package
-          #   working-directory: ./gateway
+          - name: Setup java
+            uses: actions/setup-java@v1
+            with:
+             java-version: 17   
+          - run: mvn clean package
+            working-directory: ./gateway
 
           - name: Run playbook book2.yml
             uses: dawidd6/action-ansible-playbook@v2
