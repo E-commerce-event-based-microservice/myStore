@@ -1,5 +1,8 @@
 [APIG]
-${APIG} albIp=${albIp}
+${APIG} 
+
+[APIG:alpIp]
+albIp=${albIp}
 
 [kafka]
 ${kafka}
